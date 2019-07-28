@@ -4,23 +4,8 @@ import numpy
 POSSIBLE_SUITES = ("clubs", "diamonds", "hearts", "spades")
 POSSIBLE_RANKS = ("two", "three", "four", "five", "six", "seven", "eight",
                   "nine", "ten", "jack", "queen", "king", "ace")
-SOFT_VALUES = {
-    "two": 2,
-    "three": 3,
-    "four": 4,
-    "five": 5,
-    "six": 6,
-    "seven": 7,
-    "eight": 8,
-    "nine": 9,
-    "ten": 10,
-    "jack": 10,
-    "queen": 10,
-    "king": 10,
-    "ace": 1
-}
 
-HARD_VALUES = {
+VALUES = {
     "two": 2,
     "three": 3,
     "four": 4,
@@ -44,8 +29,7 @@ class Deck():
             self.suite = suite
             self.rank = rank
             self.uuid = uuid.uuid4()
-            self.soft_value = SOFT_VALUES[self.rank]
-            self.hard_value = HARD_VALUES[self.rank]
+            self.value = VALUES[self.rank]
             self.friendly_name = self.rank.capitalize() + ' of ' + self.suite
 
     def shuffle(self):

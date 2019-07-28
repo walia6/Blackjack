@@ -2,18 +2,53 @@ import uuid
 import numpy
 
 POSSIBLE_SUITES = ("clubs", "diamonds", "hearts", "spades")
-POSSIBLE_VALUES = ("2", "3", "4", "5", "6", "7", "8", "9", "10", "jack",
-                   "queen", "king", "ace")
+POSSIBLE_RANKS = ("2", "3", "4", "5", "6", "7", "8", "9", "10", "jack",
+                  "queen", "king", "ace")
+SOFT_VALUES = {
+    "2": 2,
+    "3": 3,
+    "4": 4,
+    "5": 5,
+    "6": 6,
+    "7": 7,
+    "8": 8,
+    "9": 9,
+    "10": 10,
+    "jack": 10,
+    "queen": 10,
+    "king": 10,
+    "ace": 1
+}
+
+HARD_VALUES = {
+    "2": 2,
+    "3": 3,
+    "4": 4,
+    "5": 5,
+    "6": 6,
+    "7": 7,
+    "8": 8,
+    "9": 9,
+    "10": 10,
+    "jack": 10,
+    "queen": 10,
+    "king": 10,
+    "ace": 11
+}
 
 
 class Deck():
 
     class Card():
-        def __init__(self, suite, value):
-            self.suite, self.value, self.uuid = suite, value, uuid.uuid4()
+        def __init__(self, suite, rank):
+            self.suite = suite
+            self.rank = rank
+            self.uuid = uuid.uuid4()
+            self.soft_value = SOFT_VALUES[self.rank]
+            self.hard_value = HARD_VALUES[self.rank]
 
         def friendly_name(self):
-            return self.value + ' of ' + self.suite
+            return self.rank + ' of ' + self.suite
 
     def shuffle(self):
         self.temp_dict = {}
@@ -36,9 +71,9 @@ class Deck():
         self.do_shuffle = shuffle
 
         for suite in POSSIBLE_SUITES:
-            for value in POSSIBLE_VALUES:
+            for rank in POSSIBLE_RANKS:
                 for _ in range(0, self.deck_count):
-                    self.cards[len(self.cards)] = self.Card(suite, value)
+                    self.cards[len(self.cards)] = self.Card(suite, rank)
 
         if self.do_shuffle:
             self.shuffle()
